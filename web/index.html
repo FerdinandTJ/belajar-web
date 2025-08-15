@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>Web Sederhana</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 40px 32px 32px 32px;
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+            animation: fadeIn 1.2s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .header-icon {
+            font-size: 2.2rem;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.1rem;
+            margin: 0;
+        }
+        p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(102,166,255,0.15);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 18px rgba(102,166,255,0.22);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="header-icon">🌈</span>
+            <h1>Halo, Selamat Datang!</h1>
+        </div>
+        <p>Ini adalah contoh web sederhana yang sudah diperbagus dengan animasi, warna gradasi, dan tombol interaktif.</p>
+        <button class="btn" onclick="alert('Terima kasih sudah berkunjung!')">Klik Saya</button>
+    </div>
+</body>
+</html>
+</html>
