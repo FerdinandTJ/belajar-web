@@ -3,23 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <title>Web Sederhana</title>
+    <title>Ferdinand's Productivity Hub</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
             margin: 0;
             padding: 0;
+            transition: background 0.5s;
+            min-height: 100vh;
+        }
+        body.dark {
+            background: linear-gradient(120deg, #232526 0%, #414345 100%);
         }
         .container {
-            max-width: 500px;
-            margin: 60px auto;
+            max-width: 900px;
+            margin: 20px auto;
             background: #fff;
-            padding: 40px 32px 32px 32px;
+            padding: 20px;
             border-radius: 18px;
             box-shadow: 0 6px 24px rgba(0,0,0,0.12);
             animation: fadeIn 1.2s ease;
+            transition: background 0.5s, color 0.5s;
+        }
+        body.dark .container {
+            background: #232526;
+            color: #eee;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(30px); }
@@ -28,49 +40,602 @@
         .header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        body.dark .header {
+            border-bottom-color: #444;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
             gap: 12px;
-            margin-bottom: 18px;
         }
         .header-icon {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
         }
         h1 {
             color: #2c3e50;
-            font-size: 2.1rem;
+            font-size: 2.2rem;
             margin: 0;
+            transition: color 0.5s;
         }
-        p {
-            color: #555;
-            font-size: 1.1rem;
+        body.dark h1 {
+            color: #89f7fe;
         }
-        .btn {
-            display: inline-block;
-            margin-top: 24px;
-            padding: 12px 28px;
-            background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
-            color: #fff;
-            font-weight: 600;
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+        body.dark .tabs {
+            background: #1a1a1a;
+        }
+        .tab {
+            padding: 12px 20px;
+            background: transparent;
+            color: #666;
             border: none;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(102,166,255,0.15);
             cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .tab.active {
+            background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(102,166,255,0.3);
+        }
+        body.dark .tab {
+            color: #ccc;
+        }
+        .tab-content {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        body.dark .card {
+            background: #1a1a1a;
+            border-color: #444;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #66a6ff;
+        }
+        body.dark input, body.dark textarea {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #eee;
+        }
+        .btn {
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 14px;
         }
         .btn:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 6px 18px rgba(102,166,255,0.22);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(102,166,255,0.3);
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        .btn-danger {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ff8e8e 100%);
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e9ecef;
+        }
+        body.dark .todo-item {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+        }
+        .calc-display {
+            grid-column: span 4;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            text-align: right;
+            font-size: 24px;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+        .calc-btn {
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .calc-btn:hover {
+            background: #e9ecef;
+        }
+        .calc-btn.operator {
+            background: #66a6ff;
+            color: white;
+        }
+        .calc-btn.equals {
+            background: #28a745;
+            color: white;
+        }
+        body.dark .calc-btn {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #eee;
+        }
+        .weather-widget {
+            text-align: center;
+            padding: 20px;
+        }
+        .weather-icon {
+            font-size: 4rem;
+            margin: 20px 0;
+        }
+        .notes-area {
+            min-height: 200px;
+            width: 100%;
+            resize: vertical;
+        }
+        .dark-toggle {
+            background: #fff;
+            color: #2c3e50;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(102,166,255,0.12);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        body.dark .dark-toggle {
+            background: #2a2a2a;
+            color: #89f7fe;
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .tabs {
+                flex-wrap: wrap;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        body.dark .footer {
+            border-top-color: #444;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <span class="header-icon">🌈</span>
-            <h1>Halo, Selamat Datang! Ferdinand Tjondrojo</h1>
+            <div class="header-left">
+                <span class="header-icon">🚀</span>
+                <h1>Ferdinand's Productivity Hub</h1>
+            </div>
+            <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
         </div>
-        <p>Ini adalah contoh web sederhana yang sudah diperbagus dengan animasi, warna gradasi, dan tombol interaktif.</p>
-        <button class="btn" onclick="alert('Terima kasih sudah berkunjung!')">Klik Saya</button>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('todo')">✅ To-Do List</button>
+            <button class="tab" onclick="showTab('calculator')">🧮 Calculator</button>
+            <button class="tab" onclick="showTab('weather')">🌤️ Weather</button>
+            <button class="tab" onclick="showTab('notes')">📝 Notes</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="card">
+                <h2>� Welcome Back, Ferdinand!</h2>
+                <p>Your productivity hub is ready. Here's what you can do:</p>
+                <ul>
+                    <li>📋 Manage your daily tasks with the To-Do List</li>
+                    <li>🧮 Quick calculations with the Calculator</li>
+                    <li>🌤️ Check current weather conditions</li>
+                    <li>📝 Take notes for important reminders</li>
+                </ul>
+                <div id="quick-stats">
+                    <p><strong>Quick Stats:</strong></p>
+                    <p>📝 Todo items: <span id="todo-count">0</span></p>
+                    <p>📄 Notes saved: <span id="notes-saved">No</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Todo Tab -->
+        <div id="todo" class="tab-content">
+            <div class="card">
+                <h2>✅ To-Do List Manager</h2>
+                <div class="input-group">
+                    <input type="text" id="todo-input" placeholder="Add a new task..." maxlength="100">
+                    <button class="btn" onclick="addTodo()">Add Task</button>
+                </div>
+                <div id="todo-list"></div>
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-small" onclick="clearCompleted()">Clear Completed</button>
+                    <button class="btn btn-small btn-danger" onclick="clearAll()">Clear All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Tab -->
+        <div id="calculator" class="tab-content">
+            <div class="card">
+                <h2>🧮 Quick Calculator</h2>
+                <div class="calculator">
+                    <div class="calc-display" id="calc-display">0</div>
+                    <button class="calc-btn" onclick="clearCalc()">C</button>
+                    <button class="calc-btn" onclick="deleteLast()">⌫</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('/')">/</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('*')">×</button>
+                    <button class="calc-btn" onclick="appendToCalc('7')">7</button>
+                    <button class="calc-btn" onclick="appendToCalc('8')">8</button>
+                    <button class="calc-btn" onclick="appendToCalc('9')">9</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('-')">−</button>
+                    <button class="calc-btn" onclick="appendToCalc('4')">4</button>
+                    <button class="calc-btn" onclick="appendToCalc('5')">5</button>
+                    <button class="calc-btn" onclick="appendToCalc('6')">6</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('+')">+</button>
+                    <button class="calc-btn" onclick="appendToCalc('1')">1</button>
+                    <button class="calc-btn" onclick="appendToCalc('2')">2</button>
+                    <button class="calc-btn" onclick="appendToCalc('3')">3</button>
+                    <button class="calc-btn equals" onclick="calculateResult()" style="grid-row: span 2;">=</button>
+                    <button class="calc-btn" onclick="appendToCalc('0')" style="grid-column: span 2;">0</button>
+                    <button class="calc-btn" onclick="appendToCalc('.')">.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Tab -->
+        <div id="weather" class="tab-content">
+            <div class="card">
+                <h2>🌤️ Weather Widget</h2>
+                <div class="weather-widget">
+                    <div class="weather-icon" id="weather-icon">☀️</div>
+                    <h3 id="weather-location">Jakarta, Indonesia</h3>
+                    <p id="weather-temp">28°C</p>
+                    <p id="weather-desc">Sunny</p>
+                    <button class="btn" onclick="updateWeather()">🔄 Refresh Weather</button>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 15px;">
+                        *Simulated weather data. For real weather, integrate with weather API.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Tab -->
+        <div id="notes" class="tab-content">
+            <div class="card">
+                <h2>📝 Personal Notes</h2>
+                <textarea 
+                    class="notes-area" 
+                    id="notes-area" 
+                    placeholder="Write your notes here... They will be automatically saved in your browser."
+                    onchange="saveNotes()"
+                    oninput="saveNotes()">
+                </textarea>
+                <div style="margin-top: 15px;">
+                    <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
+                    <button class="btn btn-danger" onclick="clearNotes()">🗑️ Clear Notes</button>
+                    <span id="save-status" style="margin-left: 10px; color: #28a745;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2025 Ferdinand Tjondrojo. All rights reserved.
+        </div>
     </div>
+
+    <script>
+        // Global variables
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+        let calcExpression = '';
+        let calcResult = false;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTodos();
+            loadNotes();
+            updateStats();
+            updateWeather();
+        });
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            
+            const toggleBtn = document.querySelector('.dark-toggle');
+            toggleBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark');
+            document.querySelector('.dark-toggle').textContent = '☀️ Light Mode';
+        }
+
+        // Todo List Functions
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+            
+            if (text) {
+                const todo = {
+                    id: Date.now(),
+                    text: text,
+                    completed: false,
+                    createdAt: new Date().toLocaleDateString()
+                };
+                todos.push(todo);
+                saveTodos();
+                renderTodos();
+                input.value = '';
+                updateStats();
+            }
+        }
+
+        function toggleTodo(id) {
+            todos = todos.map(todo => 
+                todo.id === id ? { ...todo, completed: !todo.completed } : todo
+            );
+            saveTodos();
+            renderTodos();
+            updateStats();
+        }
+
+        function deleteTodo(id) {
+            todos = todos.filter(todo => todo.id !== id);
+            saveTodos();
+            renderTodos();
+            updateStats();
+        }
+
+        function clearCompleted() {
+            todos = todos.filter(todo => !todo.completed);
+            saveTodos();
+            renderTodos();
+            updateStats();
+        }
+
+        function clearAll() {
+            if (confirm('Are you sure you want to delete all tasks?')) {
+                todos = [];
+                saveTodos();
+                renderTodos();
+                updateStats();
+            }
+        }
+
+        function renderTodos() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+            
+            if (todos.length === 0) {
+                todoList.innerHTML = '<p style="text-align: center; color: #888;">No tasks yet. Add one above!</p>';
+                return;
+            }
+
+            todos.forEach(todo => {
+                const todoItem = document.createElement('div');
+                todoItem.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                todoItem.innerHTML = `
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} 
+                           onchange="toggleTodo(${todo.id})">
+                    <span style="flex: 1;">${todo.text}</span>
+                    <small style="color: #888;">${todo.createdAt}</small>
+                    <button class="btn btn-small btn-danger" onclick="deleteTodo(${todo.id})">🗑️</button>
+                `;
+                todoList.appendChild(todoItem);
+            });
+        }
+
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            renderTodos();
+        }
+
+        // Calculator Functions
+        function appendToCalc(value) {
+            const display = document.getElementById('calc-display');
+            
+            if (calcResult) {
+                if (['+', '-', '*', '/'].includes(value)) {
+                    calcExpression = display.textContent + value;
+                } else {
+                    calcExpression = value;
+                }
+                calcResult = false;
+            } else {
+                calcExpression += value;
+            }
+            
+            display.textContent = calcExpression || '0';
+        }
+
+        function clearCalc() {
+            calcExpression = '';
+            document.getElementById('calc-display').textContent = '0';
+            calcResult = false;
+        }
+
+        function deleteLast() {
+            calcExpression = calcExpression.slice(0, -1);
+            document.getElementById('calc-display').textContent = calcExpression || '0';
+        }
+
+        function calculateResult() {
+            try {
+                const expression = calcExpression.replace(/×/g, '*').replace(/−/g, '-');
+                const result = eval(expression);
+                document.getElementById('calc-display').textContent = result;
+                calcExpression = result.toString();
+                calcResult = true;
+            } catch (error) {
+                document.getElementById('calc-display').textContent = 'Error';
+                calcExpression = '';
+            }
+        }
+
+        // Weather Functions
+        function updateWeather() {
+            const weathers = [
+                { icon: '☀️', desc: 'Sunny', temp: Math.floor(Math.random() * 10) + 25 },
+                { icon: '⛅', desc: 'Partly Cloudy', temp: Math.floor(Math.random() * 8) + 22 },
+                { icon: '🌧️', desc: 'Rainy', temp: Math.floor(Math.random() * 6) + 20 },
+                { icon: '⛈️', desc: 'Stormy', temp: Math.floor(Math.random() * 5) + 18 },
+                { icon: '🌫️', desc: 'Foggy', temp: Math.floor(Math.random() * 7) + 21 }
+            ];
+            
+            const weather = weathers[Math.floor(Math.random() * weathers.length)];
+            
+            document.getElementById('weather-icon').textContent = weather.icon;
+            document.getElementById('weather-temp').textContent = weather.temp + '°C';
+            document.getElementById('weather-desc').textContent = weather.desc;
+        }
+
+        // Notes Functions
+        function saveNotes() {
+            const notes = document.getElementById('notes-area').value;
+            localStorage.setItem('notes', notes);
+            document.getElementById('save-status').textContent = '✅ Saved!';
+            setTimeout(() => {
+                document.getElementById('save-status').textContent = '';
+            }, 2000);
+            updateStats();
+        }
+
+        function loadNotes() {
+            const notes = localStorage.getItem('notes') || '';
+            document.getElementById('notes-area').value = notes;
+        }
+
+        function clearNotes() {
+            if (confirm('Are you sure you want to clear all notes?')) {
+                document.getElementById('notes-area').value = '';
+                localStorage.removeItem('notes');
+                updateStats();
+            }
+        }
+
+        // Update dashboard stats
+        function updateStats() {
+            document.getElementById('todo-count').textContent = todos.length;
+            const hasNotes = localStorage.getItem('notes') && localStorage.getItem('notes').trim() !== '';
+            document.getElementById('notes-saved').textContent = hasNotes ? 'Yes' : 'No';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Enter key in todo input
+            if (e.key === 'Enter' && document.getElementById('todo-input') === document.activeElement) {
+                addTodo();
+            }
+            // Escape key to clear calculator
+            if (e.key === 'Escape' && document.querySelector('#calculator.active')) {
+                clearCalc();
+            }
+        });
+    </script>
 </body>
 </html>
